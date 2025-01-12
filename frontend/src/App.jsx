@@ -1,11 +1,27 @@
-function App() {
-	return (
-	  <div className="text-center">
-		<h1 className="text-3xl font-bold underline">
-		  Hello, localGPT!
-		</h1>
-	  </div>
-	);
-  }
+// src/App.jsx
 
-  export default App;
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import ChatWindow from './components/ChatWindow';
+
+function App() {
+  const [conversationId, setConversationId] = useState(null);
+  const [selectedModel, setSelectedModel] = useState('o1-preview');
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar
+        conversationId={conversationId}
+        setConversationId={setConversationId}
+        selectedModel={selectedModel}
+        setSelectedModel={setSelectedModel}
+      />
+      <ChatWindow
+        conversationId={conversationId}
+        selectedModel={selectedModel}
+      />
+    </div>
+  );
+}
+
+export default App;
