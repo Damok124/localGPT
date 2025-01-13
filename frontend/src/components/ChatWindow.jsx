@@ -9,6 +9,8 @@ function ChatWindow({ conversationId, selectedModel }) {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef(null);
 
+  const apiKey = localStorage.getItem('apiKey') || '';
+
   useEffect(() => {
     if (conversationId) {
       fetchMessages(conversationId);
@@ -41,16 +43,23 @@ function ChatWindow({ conversationId, selectedModel }) {
     scrollToBottom();
 
     try {
-      // Envoyer le message à l'arrière-plan
-      const response = await axios.post(
-        `http://localhost:8000/conversations/${conversationId}/messages/`,
-        {
-          conversation_id: conversationId,
-          sender: 'user',
-          content: input,
-          model_name: selectedModel,
-        }
-      );
+		const response = await axios.post(
+		  `http://localhost:8000/conversations/${conversationId}/messages/`,
+		  {
+			conversation_id: conversationId,
+			sender: 'user',
+			content: input,
+		  },
+		  {
+			headers: {
+			  'x-api-key': apiKey,
+			  'Content-Type': 'application/json',
+			},
+			params: {
+			  model_name: selectedModel,
+			},
+		  }
+		);
 
       const assistantMessage = response.data;
       setMessages((prevMessages) => [...prevMessages, assistantMessage]);
