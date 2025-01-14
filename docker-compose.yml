@@ -3,23 +3,23 @@ version: "3.8"
 services:
   backend:
     build:
-      context: ./backend  # Répertoire du backend
-      dockerfile: Dockerfile  # Dockerfile spécifique au backend
+      context: ./backend
+      dockerfile: Dockerfile
     volumes:
-      - ./backend:/app  # Monte le dossier local 'backend' dans '/app' du conteneur
+      - ./backend:/app
     ports:
-      - "8000:8000"  # Mappe le port 8000 du conteneur vers le port 8000 de l'hôte
+      - "8000:5000"
     environment:
-      - DATABASE_URL=sqlite:///./sql_app.db  # Pour utiliser SQLite (optionnel, à ajuster selon votre base de données)
-    command: ["python", "app.py"]  # Démarre l'application Flask
+      - DATABASE_URL=sqlite:///./sql_app.db
+    command: ["python", "app.py"]
 
   frontend:
     build:
-      context: ./frontend  # Répertoire du frontend
-      dockerfile: Dockerfile  # Dockerfile spécifique au frontend
+      context: ./frontend
+      dockerfile: Dockerfile
     volumes:
-      - ./frontend:/app  # Monte le dossier local 'frontend' dans '/app' du conteneur
+      - ./frontend:/app
     ports:
-      - "3000:3000"  # Mappe le port 3000 du conteneur vers le port 3000 de l'hôte
+      - "5173:5173"  # Port corrigé pour correspondre à Vite
     depends_on:
-      - backend  # Assurez-vous que le backend est démarré avant le frontend
+      - backend
