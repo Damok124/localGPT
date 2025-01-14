@@ -1,20 +1,17 @@
-# Utilisez une image Python slim pour un environnement léger
+# Utiliser une image de base légère Python
 FROM python:3.9-slim
 
-# Définir le répertoire de travail racine temporaire
-WORKDIR /
-
-# Copier tout le contenu local dans le conteneur sous /app
-COPY . /app
-
-# Changer le répertoire de travail vers /app
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers de dépendances en premier pour tirer parti du cache Docker
-COPY requirements.txt .
+# Copier les fichiers de l'application dans le conteneur
+COPY . /app
 
-# Installer les dépendances Python
+# Installer les dépendances nécessaires
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Commande par défaut exécutée par le conteneur
-CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Exposer le port 5000 pour Flask
+EXPOSE 5000
+
+# Commande pour démarrer l'application Flask
+CMD ["python", "app.py"]

@@ -1,8 +1,11 @@
-# backend/models.py
-
 from sqlalchemy import Column, Integer, String, ForeignKey, Text
 from sqlalchemy.orm import relationship
-from .database import Base
+from database import Base
+from pydantic import BaseModel
+
+class ConversationBase(BaseModel):
+    class Config:
+        from_attributes = True  # Utilisez 'from_attributes' au lieu de 'orm_mode'
 
 class Conversation(Base):
     __tablename__ = "conversations"
@@ -19,3 +22,10 @@ class Message(Base):
     content = Column(Text)
 
     conversation = relationship("Conversation", back_populates="messages")
+
+class Config(Base):
+    __tablename__ = "config"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True)
+    value = Column(String)

@@ -1,5 +1,3 @@
-# backend/schemas.py
-
 from pydantic import BaseModel
 from typing import List
 
@@ -15,7 +13,7 @@ class Message(MessageBase):
     conversation_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Mise à jour ici
 
 class ConversationBase(BaseModel):
     pass
@@ -28,4 +26,4 @@ class Conversation(ConversationBase):
     messages: List[Message] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Mise à jour ici
