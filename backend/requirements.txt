@@ -3,3 +3,4 @@ SQLAlchemy
 Pydantic
 python-multipart
 openai
+flask-cors

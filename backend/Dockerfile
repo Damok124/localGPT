@@ -10,6 +10,9 @@ COPY . /app
 # Installer les dépendances nécessaires
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Installer flask-cors pour gérer les erreurs CORS
+RUN pip install flask-cors
+
 # Exposer le port 5000 pour Flask
 EXPOSE 5000
 
